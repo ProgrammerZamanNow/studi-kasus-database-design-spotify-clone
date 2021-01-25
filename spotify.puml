@@ -1,0 +1,107 @@
+@startuml
+entity Artist {
+    * id : VARCHAR
+    --
+    * name : VARCHAR
+    instagram : VARCHAR
+    facebook : VARCHAR
+    twitter : VARCHAR
+    wikipedia : VARCHAR
+    bio : TEXT
+}
+
+entity Album {
+    * id : VARCHAR
+    --
+    * title : VARCHAR
+    * release : YEAR
+    * image : VARCHAR
+}
+
+entity Song {
+    * id : VARCHAR
+    --
+    * album_id : VARCHAR
+    * title : VARCHAR
+    * duration : INT
+}
+
+entity PlaylistCategory {
+    * id : VARCHAR
+    --
+    * name : VARCHAR
+    * image : VARCHAR
+    * icon : VARCHAR
+}
+
+entity Playlist {
+    * id : VARCHAR
+    --
+    * name : VARCHAR
+    description : TEXT
+    image : VARCHAR
+    category_id : VARCHAR
+    * user_id : VARCHAR
+}
+
+entity PodcastCategory {
+    * id : VARCHAR
+    --
+    * name : VARCHAR
+    * image : VARCHAR
+    * icon : VARCHAR
+}
+
+entity Podcast {
+    * id : VARCHAR
+    --
+    * name : VARCHAR
+    about : TEXT
+    image : VARCHAR
+    category_id : VARCHAR
+    * user_id : VARCHAR
+}
+
+entity Episode {
+    * id : VARCHAR
+    --
+    * podcast_id : VARCHAR
+    * title : VARCHAR
+    description : TEXT
+    published_at : DATE
+    duration : INT
+}
+
+entity User {
+    * id : VARCHAR
+    --
+    * email : VARCHAR
+    * name : VARCHAR
+    birthday : DATE
+}
+
+entity Concert {
+    * id : VARCHAR
+    --
+    * event_at : DATETIME
+    * url : VARCHAR
+    * location : VARCHAR
+    lon : DOUBLE
+    lat : DOUBLE
+}
+
+Artist }|--|{ Album : Has
+Album ||--|{ Song : Contains
+Artist }|--|{ Song : Sing
+PlaylistCategory |o--|{ Playlist : Contains
+User ||--o{ Playlist : Create
+Playlist }o--o{ Song : Contains
+PodcastCategory |o--|{ Podcast : Contains
+User ||--o{ Podcast : Create
+Podcast ||--o{ Episode : Contains
+Artist }|--o{ Concert : Perform
+User }o--o{ Artist : Follow
+User }o--o{ Song : Liked Song
+User }o--o{ Playlist : Follow
+
+@enduml
